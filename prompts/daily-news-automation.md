@@ -1,223 +1,261 @@
 # Daily News Automation Prompt
 
-> Prompt chuẩn cho batch tin tức hằng ngày của repository `hunggtham/news-everyday`.
+> Source-of-truth cho toàn bộ automation của repository `hunggtham/news-everyday`.
 >
-> Lịch chạy mặc định: **08:00 Asia/Seoul (KST)** mỗi ngày.
+> Mục tiêu: tạo **knowledge brief bằng tiếng Việt**, cập nhật nhiều lần trong ngày, đủ rộng để không bỏ sót tin quan trọng nhưng vẫn tránh lặp cùng một sự kiện.
 
-## 1. Mục tiêu
+## 1. Phạm vi bắt buộc
 
-Tạo một knowledge brief hằng ngày bằng **tiếng Việt**, không phải một danh sách headline hoặc bản tóm tắt máy móc.
-
-Bắt buộc theo dõi:
+Theo dõi:
 
 - 🇻🇳 Việt Nam
 - 🇰🇷 Hàn Quốc
 - 🇺🇸 Hoa Kỳ
 - 🌍 Quốc tế khác khi có sự kiện nổi bật hoặc ảnh hưởng rõ tới ba nước trên
 
-Ưu tiên cao nhất:
+Các topic/file:
 
-1. **AI** — model, agent, AI infrastructure, AI safety, regulation, enterprise adoption, robotics, data center, compute.
-2. **IT / Technology** — semiconductor, HBM/GPU/NPU, software, cloud, cybersecurity, developer platform, telecom, digital infrastructure.
-3. Economy / Business.
-4. Politics / Public Policy.
-5. Security / Geopolitics.
-6. Society.
-7. Science / Health.
-8. Climate / Energy / Infrastructure.
+1. `news/ai.md` — AI, model, agent, AI infrastructure, safety, regulation, robotics, compute, data center.
+2. `news/it-tech.md` — semiconductor, HBM/GPU/NPU, software, cloud, cybersecurity, developer platform, telecom, digital infrastructure.
+3. `news/economy-business.md` — macro, trade, finance, markets, companies, FDI, employment, consumer trends.
+4. `news/politics-policy.md` — government, law, elections, regulation, courts, administrative reform.
+5. `news/security-geopolitics.md` — diplomacy, defense, North Korea, sanctions, conflicts, alliances.
+6. `news/society.md` — education, labor, demographics, housing, migration, culture, public services.
+7. `news/science-health.md` — research, medicine, biotech, public health, space.
+8. `news/climate-energy.md` — climate, weather, electricity, oil/gas, nuclear, renewables, transport, infrastructure.
 
-Không thêm filler chỉ để đủ quốc gia hoặc đủ lĩnh vực.
+AI và IT có mức ưu tiên cao nhất và được quét nhiều lần trong ngày.
 
 ---
 
-## 2. Nguyên tắc quan trọng nhất
+## 2. Quy tắc mới: mỗi topic phải có nhiều sự kiện khác nhau
 
-### 2.1 Không chỉ tóm tắt
+Không được hiểu deduplication là “mỗi topic chỉ còn một tin”.
 
-Mỗi mục tin phải giúp người đọc **hiểu sự kiện**, gồm:
+Mục tiêu mỗi ngày cho **mỗi topic có đủ news**:
 
-1. **Tin mới nhất / trạng thái hiện tại** — điều gì vừa được xác nhận hoặc công bố.
-2. **Chuyện gì xảy ra** — facts ngắn gọn.
-3. **Bối cảnh & giải thích** — thuật ngữ, cơ chế, sự kiện trước đó cần biết.
-4. **Vì sao đáng chú ý** — tác động thực tế tới kinh tế, công nghệ, xã hội, chính sách hoặc đời sống.
-5. **Cần theo dõi gì tiếp** — mốc thời gian, dữ liệu, quyết định hoặc rủi ro tiếp theo.
-6. **Nguồn & cách tìm lại** — link trực tiếp nếu thực sự đã lấy/kiểm tra nguồn; đồng thời luôn ghi query tìm kiếm cụ thể.
+- ưu tiên **3–5 sự kiện khác nhau** trong `## YYYY-MM-DD`;
+- có thể ít hơn 3 nếu thật sự không có đủ tin chất lượng;
+- có thể vượt 5 khi có breaking news lớn, nhưng tránh biến file thành feed dài;
+- mỗi event phải là một câu chuyện riêng, không phải nhiều bài cùng nói lại một việc.
+
+Ví dụ đúng:
+
+```text
+AI ngày X
+├─ OpenAI ra model mới
+├─ Hàn Quốc công bố AI policy mới
+├─ Nvidia/Broadcom ký deal hạ tầng
+├─ Việt Nam có đầu tư AI/data center mới
+└─ EU/Mỹ có regulation đáng chú ý
+```
+
+Ví dụ sai:
+
+```text
+AI ngày X
+├─ Reuters viết về OpenAI model mới
+├─ AP viết về OpenAI model mới
+├─ Bloomberg viết về OpenAI model mới
+├─ FT viết về OpenAI model mới
+└─ TechCrunch viết về OpenAI model mới
+```
+
+Năm bài trên phải được gom thành **1 event nhiều nguồn**.
+
+### 2.1 Nhiều nguồn là tín hiệu importance, không phải số lượng news
+
+Nếu cùng một sự kiện xuất hiện trên 5+ nguồn độc lập uy tín:
+
+- tăng điểm `cross-source confirmation`;
+- đánh dấu đây là event đáng chú ý hơn;
+- có thể ghi `N-source validated` trong ghi chú nội bộ;
+- nhưng vẫn chỉ chiếm **1 slot** trong target 3–5 event của topic.
+
+Sau đó tiếp tục tìm các event khác cùng topic để đủ chiều rộng.
+
+---
+
+## 3. Không chỉ tóm tắt
+
+Mỗi news item phải giúp người đọc **hiểu sự kiện**, gồm:
+
+1. **Tin mới nhất / trạng thái hiện tại** — update mới nhất đã được xác nhận.
+2. **Chuyện gì xảy ra** — facts, số liệu, ai làm gì, khi nào.
+3. **Bối cảnh & giải thích** — khái niệm/cơ chế/sự kiện trước đó cần biết.
+4. **Vì sao đáng chú ý** — tác động thực tế.
+5. **Cần theo dõi gì tiếp** — mốc tiếp theo, dữ liệu tiếp theo, implementation risk, câu hỏi chưa xác nhận.
+6. **Nguồn & cách tìm lại** — URL nếu đã trực tiếp kiểm tra + query tìm kiếm cụ thể.
 7. **Keywords EN/KR → VI** — từ mới/thuật ngữ quan trọng.
 
-### 2.2 Phân biệt trạng thái thông tin
-
-Dùng nhãn khi cần:
-
-- `✅ OFFICIAL` — nguồn chính phủ, regulator, công ty, tổ chức phát hành trực tiếp.
-- `📰 REPORTED` — Reuters/AP/FT/Bloomberg hoặc báo uy tín đưa tin dựa trên nguồn/phỏng vấn.
-- `🔎 ANALYSIS` — bài phân tích, forecast, commentary; không trình bày như fact đã xảy ra.
-- `⚠️ CLAIM / CHƯA XÁC MINH ĐỘC LẬP` — tuyên bố của một bên trong xung đột, benchmark nội bộ, capability chưa kiểm chứng.
-
-Không biến forecast thành kết quả chính thức. Không biến tuyên bố của chính phủ/công ty thành sự thật độc lập nếu đang có tranh chấp.
+Một item nên đủ sâu để hiểu trong khoảng 1–3 phút, nhưng tránh thành essay dài.
 
 ---
 
-## 3. Source policy
+## 4. Trạng thái thông tin
 
-### 3.1 Thứ tự ưu tiên nguồn
+Dùng nhãn khi phù hợp:
 
-1. **Primary / official source**
-   - cơ quan thống kê
-   - bộ/ngành
-   - central bank/regulator
-   - White House / Korean government / Vietnamese government
-   - company newsroom / engineering blog / research paper
-2. **Wire services** — Reuters, AP.
-3. **High-quality financial/general press** — FT, Bloomberg, WSJ, BBC, major national newspapers.
-4. **Specialist source** — Ars Technica, The Verge, TechCrunch, semiconductor/security trade publications, khi phù hợp.
-5. Community sources chỉ dùng để phát hiện story, không dùng làm nguồn chính cho fact quan trọng.
+- `✅ OFFICIAL` — primary source trực tiếp.
+- `📰 REPORTED` — Reuters/AP/FT/Bloomberg hoặc báo uy tín đưa tin.
+- `🔎 ANALYSIS` — forecast/commentary/phân tích.
+- `⚠️ CLAIM / CHƯA XÁC MINH ĐỘC LẬP` — tuyên bố một phía, capability chưa xác minh, số liệu tranh chấp.
 
-Đối với sự kiện chính sách, số liệu kinh tế, release sản phẩm/model: **cố gắng tìm primary source trước**.
+Không biến forecast thành kết quả chính thức. Không biến company/government claim thành fact độc lập nếu chưa được xác minh.
 
-### 3.2 Source block bắt buộc
+---
 
-Mỗi tin dùng format:
+## 5. Source policy
+
+Ưu tiên:
+
+1. **Primary / official source** — chính phủ, regulator, central bank, statistics office, company newsroom/engineering blog, research paper.
+2. Reuters / AP.
+3. FT / Bloomberg / WSJ / BBC / major national press.
+4. Specialist source — Ars Technica, The Verge, TechCrunch, semiconductor/security trade press khi phù hợp.
+5. Community source chỉ dùng để phát hiện story, không làm nguồn chính cho fact quan trọng.
+
+### Source block bắt buộc
 
 ```md
 **Nguồn & cách tìm lại**
-- Nguồn chính thức: [Tên nguồn](URL) — nếu đã trực tiếp lấy được URL.
-- Nguồn bổ sung: [Reuters/AP/...](URL) — nếu đã trực tiếp lấy được URL.
-- Search keyword: `cụm từ đủ cụ thể để tìm lại tin này`
-- Korean search keyword: `검색어` — đặc biệt với tin Hàn Quốc.
+- Nguồn chính thức: [Tên nguồn](URL) — nếu đã trực tiếp xác nhận URL.
+- Nguồn bổ sung: [Reuters/AP/...](URL) — nếu đã trực tiếp xác nhận URL.
+- Search keyword: `cụm từ đủ cụ thể để tìm lại tin`
+- Korean search keyword: `검색어` — đặc biệt cho tin Hàn Quốc.
 ```
 
-Không bịa URL. Nếu không trực tiếp xác nhận được link, chỉ ghi tên nguồn + search keyword.
+Không bịa URL.
 
 ---
 
-## 4. Pipeline — học từ các open-source news projects
+## 6. Pattern học từ open-source news projects
 
-Áp dụng các pattern tốt từ các dự án open-source sau, nhưng không sao chép nội dung của họ:
+Áp dụng các pattern tốt, không sao chép nội dung:
 
-### RSSHub
-Repository: https://github.com/DIYgod/RSSHub
+- **RSSHub** — ingestion từ RSS/route, canonical URL, metadata nguồn.
+- **Folo** — giữ link gốc; AI summary/translation chỉ là lớp hỗ trợ; silence/filter noise.
+- **miniflux-ai** — batch theo lịch; allow-list/deny-list; Markdown output; tổng hợp theo tập bài.
+- **ai-daily-news** — dedup URL → title similarity → semantic similarity; time decay; multi-source validation.
+- **Courier** — rerank theo freshness + source quality + importance; cross-source clustering.
+- **FreshRSS** — tags/categories; feed health; scraping/XPath chỉ là fallback.
 
-Ý tưởng áp dụng:
-- RSS/feed là lớp ingestion mặc định.
-- Website không có RSS có thể dùng RSSHub route hoặc scraping có kiểm soát.
-- Giữ metadata nguồn gốc và URL canonical để deduplicate tốt hơn.
-
-### Folo
-Repository: https://github.com/RSSNext/Folo
-
-Ý tưởng áp dụng:
-- AI summary + translation chỉ là lớp hỗ trợ; phải giữ link bài gốc.
-- Readability/full-content khi feed chỉ có excerpt.
-- Dùng rule để silence/block nguồn hoặc dạng nội dung nhiễu.
-
-### miniflux-ai
-Repository: https://github.com/Qetesh/miniflux-ai
-
-Ý tưởng áp dụng:
-- Batch theo lịch cố định.
-- Cho phép allow-list / deny-list nguồn.
-- Output Markdown.
-- Daily news được tổng hợp từ tập bài trong cửa sổ thời gian, không xử lý từng article độc lập.
-
-### ai-daily-news
-Repository: https://github.com/Alionkissadeer/ai-daily-news
-
-Ý tưởng áp dụng:
-- Dedup **3 tầng**: URL → title similarity → summary/semantic similarity.
-- Có time-decay để bài mới được ưu tiên.
-- Nhiều báo cùng đưa một story phải trở thành **một event được cross-validated**, không phải nhiều mục.
-
-### Courier
-Repository: https://github.com/Harris-H/courier
-
-Ý tưởng áp dụng:
-- Rerank dựa trên **freshness + source quality + importance/relevance**.
-- Cross-source clustering bằng canonical URL + title similarity.
-- Có tín hiệu `N-source validated` cho sự kiện được nhiều nguồn độc lập xác nhận.
-
-### FreshRSS
-Repository: https://github.com/FreshRSS/FreshRSS
-
-Ý tưởng áp dụng:
-- Tags/categories cho nguồn.
-- Web scraping/XPath chỉ là fallback khi feed không đủ nội dung.
-- Feed health và khả năng thay nguồn khi RSS chết.
-
----
-
-## 5. Thu thập → xếp hạng → gom sự kiện
-
-Pipeline logic:
+### Pipeline
 
 ```text
 collect
   ↓
-normalize URL / title / publication time
+normalize URL/title/time/entity
   ↓
-filter low-quality + stale + duplicate
+filter low-quality/stale/noise
   ↓
 cluster same event
   ↓
-verify with primary source / second source
+merge sources for each event
   ↓
-rank events
+verify primary + secondary source
   ↓
-explain + add context
+rank events inside each topic
   ↓
-route to topic Markdown file
+select 3–5 distinct events/topic/day
+  ↓
+explain + context + next watch
+  ↓
+update topic Markdown
 ```
 
-### 5.1 Cửa sổ thời gian
+---
 
-- Batch 08:00 KST ưu tiên tin mới trong **24 giờ gần nhất**.
-- Cho phép lấy tin sớm hơn nếu có **update mới** trong 24 giờ hoặc sự kiện vẫn đang diễn biến.
-- Ngày section là ngày batch theo `Asia/Seoul`.
-- Nếu bài xuất bản theo UTC/Mỹ ngày trước nhưng lọt vào batch KST hôm nay, ghi rõ ngày/giờ khi điều đó ảnh hưởng cách hiểu.
-
-### 5.2 Dedup / event clustering
-
-Một sự kiện được coi là trùng khi có một hoặc nhiều tín hiệu:
-
-- canonical URL giống nhau;
-- title gần giống;
-- cùng entity + action + time window;
-- semantic summary nói về cùng một sự kiện.
-
-Ví dụ 8 báo cùng viết “Korea September exports hit record” → chỉ tạo **1 event** và gộp nguồn.
-
-Không lặp nguyên một event ở nhiều file. Chọn **primary topic**. Nếu event thực sự cross-domain, file phụ chỉ ghi một note ngắn dẫn sang file chính.
-
-### 5.3 Ranking
-
-Không xếp hạng chỉ dựa trên độ viral.
+## 7. Ranking sự kiện
 
 Gợi ý score:
 
 ```text
 importance / real-world impact   30%
 freshness                       20%
-source quality                   20%
-AI/IT relevance                 15%
+source quality                   15%
+AI/IT relevance                 10%
 cross-source confirmation       10%
+novelty vs events already saved 10%
 Vietnam/Korea/US relevance       5%
 ```
 
-Cho phép editor override khi có chiến tranh, thiên tai lớn, thay đổi luật, financial shock, major security breach hoặc breakthrough công nghệ.
+`novelty` rất quan trọng: event đã có trong file hôm nay chỉ được update khi có diễn biến mới thực chất, không được chiếm thêm một slot.
+
+Editor override được phép cho chiến tranh, thiên tai lớn, major policy/law change, financial shock, major cyber breach hoặc breakthrough công nghệ.
 
 ---
 
-## 6. Routing vào Markdown
+## 8. Multi-run automation trong ngày
 
-Các file:
+Các automation khác nhau sẽ cùng đọc prompt này nhưng chỉ sửa file/topic được giao.
 
-- `news/ai.md`
-- `news/it-tech.md`
-- `news/economy-business.md`
-- `news/politics-policy.md`
-- `news/society.md`
-- `news/security-geopolitics.md`
-- `news/science-health.md`
-- `news/climate-energy.md`
+### 08:00 KST — Morning AI & IT
+
+- scope: `news/ai.md`, `news/it-tech.md`
+- lookback: ưu tiên 12–24 giờ
+- tạo nền 3–5 event/topic nếu có đủ tin
+- đặc biệt quét Hàn Quốc, Việt Nam, Mỹ và các release diễn ra trong giờ Mỹ đêm trước
+
+### 10:00 KST — Economy & Business
+
+- scope: `news/economy-business.md`
+- ưu tiên official macro data, markets, trade, companies, FDI, earnings, policy transmission
+- target 3–5 event/ngày
+
+### 12:00 KST — Politics & Security
+
+- scope: `news/politics-policy.md`, `news/security-geopolitics.md`
+- target 3–5 event/topic/ngày
+- luôn phân biệt official statement / reported fact / disputed claim
+
+### 14:00 KST — AI & IT Midday Refresh
+
+- scope: `news/ai.md`, `news/it-tech.md`
+- chỉ thêm event mới hoặc update thực chất từ sáng
+- không lặp lại event cũ chỉ vì xuất hiện thêm báo mới
+- nếu topic sáng mới có 1–2 event, tiếp tục tìm để đạt khoảng 3–5 event chất lượng
+
+### 16:00 KST — Society / Science / Climate
+
+- scope: `news/society.md`, `news/science-health.md`, `news/climate-energy.md`
+- target 3–5 event/topic/ngày nếu có đủ chất lượng
+- science/health phải phân biệt preprint, peer-reviewed paper, trial, regulatory approval, guideline
+
+### 20:00 KST — Evening AI/IT + Day Completion
+
+- ưu tiên `news/ai.md`, `news/it-tech.md`
+- sau đó scan nhanh tất cả topic để phát hiện major event còn thiếu
+- bổ sung các tin Mỹ mới xuất hiện trong ngày KST
+- mục tiêu cuối ngày: mỗi topic active có khoảng 3–5 event khác nhau
+- không thêm filler để đạt quota nếu chất lượng thấp
+
+Các automation không được tạo `## YYYY-MM-DD` trùng. Chúng phải đọc section ngày hiện tại trước rồi **merge/update** nội dung.
+
+---
+
+## 9. Dedup / event clustering giữa nhiều lần chạy
+
+Một event được coi là trùng khi có một hoặc nhiều tín hiệu:
+
+- canonical URL giống nhau;
+- title tương đồng;
+- cùng entity + action + time window;
+- semantic summary nói về cùng một sự kiện.
+
+Khi automation chạy sau:
+
+1. đọc các event đã lưu trong `## YYYY-MM-DD`;
+2. so sánh candidate mới với event hiện có;
+3. nếu cùng event nhưng có update mới: cập nhật **Tin mới nhất**, nguồn và `Cần theo dõi tiếp`;
+4. nếu chỉ có thêm bài báo viết lại cùng nội dung: chỉ bổ sung source nếu thực sự tăng độ tin cậy, không tạo event mới;
+5. nếu là câu chuyện mới cùng topic: thêm event mới cho đến khoảng 3–5 event chất lượng.
+
+Không lặp nguyên một event ở nhiều file. Chọn **primary topic**. Nếu thực sự cross-domain, file phụ chỉ note ngắn dẫn sang file chính.
+
+---
+
+## 10. Format Markdown
 
 Trong mỗi file:
 
@@ -237,13 +275,9 @@ Trong mỗi file:
 ...
 ```
 
-Chỉ tạo country section nếu có tin đủ quan trọng.
+Không bắt buộc mỗi quốc gia phải có tin ở từng topic; ưu tiên chất lượng.
 
-Nếu section `## YYYY-MM-DD` đã tồn tại: **thay/cập nhật section đó**, không append section trùng. Không sửa lịch sử ngày khác nếu không có yêu cầu backfill/correction.
-
----
-
-## 7. Format một news item
+Mỗi event:
 
 ```md
 #### Tiêu đề tiếng Việt rõ nghĩa
@@ -251,22 +285,19 @@ Nếu section `## YYYY-MM-DD` đã tồn tại: **thay/cập nhật section đó
 **Trạng thái:** ✅ OFFICIAL / 📰 REPORTED / 🔎 ANALYSIS / ⚠️ CLAIM
 
 **Tin mới nhất**
-- 1–3 câu nói update mới nhất hiện tại.
+- ...
 
 **Chuyện gì xảy ra**
-- Facts chính, số liệu, ai làm gì, khi nào.
+- ...
 
 **Bối cảnh & giải thích**
-- Giải thích cơ chế hoặc lịch sử cần thiết.
-- Với công nghệ: giải thích sản phẩm/model/chip/API hoạt động ở lớp nào.
-- Với kinh tế: giải thích transmission mechanism, không chỉ đọc số.
-- Với luật/chính sách: giải thích before → after và người dân/doanh nghiệp bị ảnh hưởng thế nào.
+- ...
 
 **Vì sao đáng chú ý**
-- 2–4 bullet, ưu tiên tác động thực tế.
+- ...
 
 **Cần theo dõi tiếp**
-- Mốc tiếp theo, dữ liệu tiếp theo, implementation risk hoặc câu hỏi chưa được xác nhận.
+- ...
 
 **Nguồn & cách tìm lại**
 - Nguồn chính thức: [...](...)
@@ -282,44 +313,47 @@ Nếu section `## YYYY-MM-DD` đã tồn tại: **thay/cập nhật section đó
 
 ---
 
-## 8. Quy tắc viết
+## 11. Quy tắc viết
 
-- Nội dung giải thích: **tiếng Việt**.
-- Giữ tên riêng, ticker, model name, API name, luật, cơ quan bằng tên chuẩn.
-- Với tin Hàn Quốc, giữ từ khóa tiếng Hàn gốc để hỗ trợ học tiếng Hàn.
-- Keywords nên ưu tiên thuật ngữ có thể tái sử dụng trong công việc/đọc báo, không chọn từ quá cơ bản.
-- Không copy dài từ article.
-- Tóm tắt bằng lời của mình.
-- Một item nên đủ sâu để hiểu trong 1–3 phút nhưng tránh trở thành essay dài.
-- Nếu một số liệu gây bất ngờ lớn, kiểm tra ít nhất hai nguồn hoặc primary source trước khi ghi.
-
----
-
-## 9. Daily recap sau khi commit
-
-Sau khi cập nhật GitHub, trả về chat:
-
-1. 3–5 sự kiện quan trọng nhất.
-2. File đã update.
-3. Correction/uncertainty đáng chú ý nếu có.
-4. Không paste lại toàn bộ nội dung Markdown.
+- Nội dung chính: **tiếng Việt**.
+- Giữ tên riêng, ticker, model/API/product/law/agency bằng tên chuẩn.
+- Tin Hàn Quốc giữ keyword tiếng Hàn gốc.
+- Keywords chọn thuật ngữ tái sử dụng được, không chọn từ quá cơ bản.
+- Không copy dài article; paraphrase.
+- Số liệu bất thường phải cross-check primary source hoặc ít nhất hai nguồn uy tín.
+- Tin science/health không được suy rộng quá mức từ nghiên cứu nhỏ.
+- Tin policy/law phải giải thích before → after + đối tượng bị ảnh hưởng.
+- Tin economy phải giải thích transmission mechanism khi có ích.
+- Tin tech phải giải thích sản phẩm/model/chip/API nằm ở lớp nào trong stack.
 
 ---
 
-## 10. Quality checklist
+## 12. Recap sau mỗi automation
 
-Trước khi commit, tự kiểm tra:
+Sau commit, chỉ gửi recap ngắn:
+
+1. event mới hoặc update quan trọng vừa thêm;
+2. file đã cập nhật;
+3. hiện topic đó có bao nhiêu event trong ngày;
+4. correction/uncertainty đáng chú ý;
+5. không paste lại toàn bộ Markdown.
+
+---
+
+## 13. Quality checklist
+
+Trước khi commit:
 
 - [ ] Nội dung chính là tiếng Việt.
-- [ ] Việt Nam/Hàn Quốc/Mỹ đã được scan.
-- [ ] AI/IT được ưu tiên.
+- [ ] Scan đúng scope của automation.
 - [ ] Không có cùng event lặp thành nhiều bài.
+- [ ] Mỗi topic active hướng tới 3–5 event khác nhau/ngày.
+- [ ] Nhiều nguồn của cùng event được merge, không tính thành nhiều event.
+- [ ] Event mới có novelty so với nội dung đã lưu.
 - [ ] Primary source được ưu tiên nếu tồn tại.
-- [ ] Fact và analysis được phân biệt.
-- [ ] Link chỉ được ghi nếu đã xác nhận.
+- [ ] Fact / analysis / claim được phân biệt.
+- [ ] Link chỉ ghi nếu đã xác nhận.
 - [ ] Có search keyword cụ thể.
-- [ ] Tin Hàn có Korean search keyword khi phù hợp.
-- [ ] Có context/explanation chứ không chỉ summary.
-- [ ] Có `Cần theo dõi tiếp`.
-- [ ] Có bảng keyword EN/KR → VI.
-- [ ] Không tạo filler.
+- [ ] Tin Hàn Quốc có Korean search keyword khi hữu ích.
+- [ ] Có Keywords EN/KR → VI.
+- [ ] Không tạo filler chỉ để đủ quota.
