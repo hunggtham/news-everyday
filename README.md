@@ -1,55 +1,68 @@
 # News Everyday
 
-Knowledge brief tin tức hằng ngày cho **Việt Nam 🇻🇳, Hàn Quốc 🇰🇷, Hoa Kỳ 🇺🇸** và các sự kiện quốc tế nổi bật.
+Knowledge brief hằng ngày cho **Việt Nam 🇻🇳, Hàn Quốc 🇰🇷, Hoa Kỳ 🇺🇸** và các diễn biến quốc tế nổi bật.
 
-Mục tiêu của repository này **không phải lưu một đống headline hoặc summary ngắn**. Mỗi tin quan trọng phải giúp người đọc hiểu:
+Mục tiêu của repo không phải là lưu càng nhiều headline càng tốt, mà là giữ **nhiều sự kiện đáng chú ý trong mỗi chủ đề**, giải thích đủ bối cảnh để đọc lại vẫn hiểu.
 
-1. Tin mới nhất hiện tại là gì?
-2. Chuyện gì thực sự đã xảy ra?
-3. Bối cảnh/cơ chế phía sau là gì?
-4. Vì sao nó quan trọng?
-5. Tiếp theo cần theo dõi điều gì?
-6. Tìm lại nguồn bằng link hoặc keyword nào?
-7. Những thuật ngữ English / 한국어 nào đáng học?
+## Nguyên tắc nội dung
 
-## ⏰ Lịch cập nhật
+- Nội dung chính bằng **tiếng Việt**.
+- Giữ keyword quan trọng bằng **English / 한국어 → Tiếng Việt**.
+- AI và IT là hai lĩnh vực ưu tiên cao nhất.
+- Mỗi topic active hướng tới **3–5 event KHÁC NHAU mỗi ngày** nếu có đủ tin chất lượng.
+- Nhiều bài báo viết về cùng một sự kiện được **gom thành một event nhiều nguồn**, không tính thành nhiều news item.
+- Một event xuất hiện trên nhiều nguồn độc lập được coi là tín hiệu importance/cross-validation, nhưng vẫn chỉ chiếm một slot.
+- Không thêm filler chỉ để đủ quota.
+- Ưu tiên primary/official source, sau đó Reuters/AP và nguồn uy tín khác.
+- Mỗi news item phải có context, tác động, điều cần theo dõi tiếp, source link/search keyword và vocabulary.
 
-- Batch tự động: **08:00 Asia/Seoul (KST) mỗi ngày**.
-- Cửa sổ ưu tiên: khoảng **24 giờ gần nhất**.
-- Nếu một sự kiện cũ có update mới, update mới vẫn được đưa vào batch.
-- Ngày section dùng ngày theo **KST**; khi timezone dễ gây hiểu nhầm, nội dung sẽ ghi rõ thời điểm công bố thực tế.
+## Topic files
 
-## ⭐ Thứ tự ưu tiên
+- [`news/ai.md`](news/ai.md) — AI models, agents, AI infrastructure, regulation, robotics, compute
+- [`news/it-tech.md`](news/it-tech.md) — semiconductor, HBM/GPU/NPU, software, cloud, cybersecurity, telecom
+- [`news/economy-business.md`](news/economy-business.md) — macro, trade, finance, companies, FDI, employment
+- [`news/politics-policy.md`](news/politics-policy.md) — government, law, regulation, elections, courts
+- [`news/security-geopolitics.md`](news/security-geopolitics.md) — diplomacy, defense, North Korea, conflicts, alliances
+- [`news/society.md`](news/society.md) — education, labor, demographics, housing, migration, public services
+- [`news/science-health.md`](news/science-health.md) — science, medicine, biotech, public health, space
+- [`news/climate-energy.md`](news/climate-energy.md) — climate, extreme weather, energy, transport, infrastructure
 
-1. **AI**
-2. **IT / Technology**
-3. Economy / Business
-4. Politics / Public Policy
-5. Security / Geopolitics
-6. Society
-7. Science / Health
-8. Climate / Energy / Infrastructure
+## Automation schedule — Asia/Seoul
 
-Không thêm filler chỉ để đủ quốc gia hoặc đủ lĩnh vực.
+Thay vì chỉ chạy một batch lúc 08:00, mỗi nhóm topic được scan lại **3 lần/ngày**.
 
-## 📂 Cấu trúc
+| Automation | Topic | Giờ KST |
+|---|---|---|
+| AI & IT News | `ai.md`, `it-tech.md` | 08:00 · 14:00 · 20:00 |
+| Economy & Business News | `economy-business.md` | 09:00 · 15:00 · 21:00 |
+| Politics & Security News | `politics-policy.md`, `security-geopolitics.md` | 10:00 · 16:00 · 22:00 |
+| Society Science Climate News | `society.md`, `science-health.md`, `climate-energy.md` | 11:00 · 17:00 · 23:00 |
 
-- [`news/ai.md`](news/ai.md) — AI models, agents, AI infrastructure, safety, regulation, adoption
-- [`news/it-tech.md`](news/it-tech.md) — software, cloud, cybersecurity, semiconductor, telecom, developer platforms
-- [`news/economy-business.md`](news/economy-business.md) — GDP, inflation, trade, finance, markets, investment, companies
-- [`news/politics-policy.md`](news/politics-policy.md) — government, law, courts, regulation, administrative reform
-- [`news/society.md`](news/society.md) — education, labor, demographics, housing, culture, public services
-- [`news/security-geopolitics.md`](news/security-geopolitics.md) — diplomacy, defense, North Korea, war, sanctions, alliances
-- [`news/science-health.md`](news/science-health.md) — science, medicine, biotech, public health, research
-- [`news/climate-energy.md`](news/climate-energy.md) — climate, weather, oil/gas, electricity, infrastructure, resilience
+Mỗi lần chạy:
 
-Automation prompt chuẩn được lưu tại:
+1. đọc section `## YYYY-MM-DD` hiện tại;
+2. tìm tin mới/update kể từ lần trước và nhìn lại tối đa 24 giờ để tránh bỏ sót;
+3. cluster các bài cùng event;
+4. update event cũ nếu có diễn biến mới thực chất;
+5. thêm event mới nếu có novelty;
+6. hướng tới 3–5 event khác nhau/topic/ngày;
+7. chỉ commit khi có thay đổi đáng kể.
 
-- [`prompts/daily-news-automation.md`](prompts/daily-news-automation.md)
+## Event clustering
 
-File prompt này là **source-of-truth** cho cách thu thập, ranking, dedup, clustering, verification và viết nội dung hằng ngày.
+Ví dụ 5 báo cùng viết về một sự kiện:
 
-## 🧠 Format của một news item
+```text
+Reuters ─┐
+AP      ─┤
+FT      ─┼─> 1 EVENT
+WSJ     ─┤
+TechCrunch┘
+```
+
+Sau khi merge event đó, pipeline tiếp tục tìm những câu chuyện khác trong cùng topic để đạt độ bao phủ rộng hơn.
+
+## Format một news item
 
 ```md
 ## YYYY-MM-DD
@@ -61,25 +74,25 @@ File prompt này là **source-of-truth** cho cách thu thập, ranking, dedup, c
 **Trạng thái:** ✅ OFFICIAL / 📰 REPORTED / 🔎 ANALYSIS / ⚠️ CLAIM
 
 **Tin mới nhất**
-- Update mới nhất.
+- ...
 
 **Chuyện gì xảy ra**
-- Facts chính.
+- ...
 
 **Bối cảnh & giải thích**
-- Giải thích thuật ngữ, cơ chế, trước → sau hoặc nguyên nhân → hệ quả.
+- ...
 
 **Vì sao đáng chú ý**
-- Tác động thực tế.
+- ...
 
 **Cần theo dõi tiếp**
-- Mốc tiếp theo / dữ liệu tiếp theo / điểm chưa chắc chắn.
+- ...
 
 **Nguồn & cách tìm lại**
-- Nguồn chính thức: [Tên nguồn](URL)
-- Nguồn bổ sung: [Reuters/AP/...](URL)
-- Search keyword: `exact search query`
-- Korean search keyword: `정확한 검색어`
+- Nguồn chính thức: [...](...)
+- Nguồn bổ sung: [...](...)
+- Search keyword: `...`
+- Korean search keyword: `...`
 
 **Keywords EN/KR → VI**
 | English | 한국어 | Tiếng Việt |
@@ -87,63 +100,23 @@ File prompt này là **source-of-truth** cho cách thu thập, ranking, dedup, c
 | ... | ... | ... |
 ```
 
-## 🧾 Trạng thái nguồn
+## Prompt source-of-truth
 
-- `✅ OFFICIAL` — cơ quan chính phủ/regulator/công ty/paper công bố trực tiếp.
-- `📰 REPORTED` — Reuters, AP hoặc nguồn báo chí uy tín đưa tin.
-- `🔎 ANALYSIS` — phân tích/forecast, không trình bày như fact đã xảy ra.
-- `⚠️ CLAIM` — tuyên bố của một bên chưa được xác minh độc lập.
+Toàn bộ rule chi tiết cho ingestion, ranking, deduplication, event clustering, multi-run merge, source verification và output nằm tại:
 
-Đối với số liệu kinh tế, thay đổi luật, model/product release và chính sách lớn, ưu tiên **primary source trước** rồi dùng báo chí để bổ sung bối cảnh.
+[`prompts/daily-news-automation.md`](prompts/daily-news-automation.md)
 
-## 🔁 Dedup & event clustering
+Automation phải đọc prompt này trước mỗi run.
 
-Không làm kiểu:
+## Open-source patterns tham khảo
 
-```text
-Reuters: Korea exports hit record
-Yonhap: Korea exports hit record
-Korea Times: Korea exports hit record
-Bloomberg: Korea exports hit record
-        ↓
-4 news items ❌
-```
+Pipeline tham khảo các pattern hữu ích từ:
 
-Mà gom thành:
+- RSSHub
+- Folo
+- Miniflux / miniflux-ai
+- ai-daily-news
+- Courier
+- FreshRSS
 
-```text
-1 EVENT
-├─ official data
-├─ Reuters
-├─ local source
-└─ specialist analysis
-        ↓
-1 explained, cross-validated news item ✅
-```
-
-Một event chỉ nên có **một topic chính** để tránh lặp giữa nhiều file.
-
-## 🛠️ Open-source design references
-
-Workflow tham khảo các pattern tốt từ:
-
-- [RSSHub](https://github.com/DIYgod/RSSHub) — tạo/chuẩn hóa RSS cho nhiều nguồn.
-- [Folo](https://github.com/RSSNext/Folo) — reader, AI summary/translation, readability và rules.
-- [Miniflux-AI](https://github.com/Qetesh/miniflux-ai) — scheduled AI news, filters, Markdown output.
-- [AI Daily News](https://github.com/Alionkissadeer/ai-daily-news) — multi-stage dedup + recency scoring + Markdown publishing.
-- [Courier](https://github.com/Harris-H/courier) — reranking + cross-source clustering.
-- [FreshRSS](https://github.com/FreshRSS/FreshRSS) — feed organization, tagging, scraping fallback.
-
-Các project này chỉ được dùng để tham khảo **kiến trúc/pipeline**, không sao chép nội dung báo.
-
-## ✅ Quality rules
-
-- Nội dung chính bằng tiếng Việt.
-- Việt Nam / Hàn Quốc / Hoa Kỳ luôn được scan; quốc tế thêm khi đáng kể.
-- AI và IT được ưu tiên cao nhất.
-- Không lặp cùng một event thành nhiều headline.
-- Không biến forecast thành official result.
-- Không biến claim trong xung đột thành fact độc lập.
-- Không bịa URL; nếu chưa xác minh link thì chỉ ghi nguồn + search keyword.
-- Luôn thêm keyword English/Korean khi hữu ích.
-- Không có tin đáng kể thì **để trống**, không thêm filler.
+Các ý chính được áp dụng: RSS ingestion, canonical URL, source quality, freshness, URL/title/semantic dedup, event clustering, multi-source validation, Markdown output và scheduled batching.
