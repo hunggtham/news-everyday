@@ -129,3 +129,127 @@ Khi cùng một tổ chức có thể vừa điều tra vừa quyết định c�
 - `검찰청 폐지` **không đồng nghĩa** Hàn Quốc bỏ công tố viên.
 - Thay đổi chính là **tổ chức và quyền hạn**: công tố tập trung vào prosecution, còn direct investigation chuyển sang police/중수청.
 - Vì vậy khi đọc báo Hàn sau 2/10, cần phân biệt `검찰` như khái niệm công tố và `검찰청` như cơ quan cũ đã bị thay thế.
+
+---
+
+## 2026-10-05
+
+### 🇰🇷 Hàn Quốc
+
+#### Tổng thống yêu cầu điều tra toàn diện chuỗi rò rỉ dữ liệu tài chính; chính sách cyber có thể được siết lại
+
+**Trạng thái:** 📰 REPORTED / chỉ đạo của Tổng thống được Reuters dẫn từ 청와대
+
+**Tin mới nhất**
+- Tổng thống Lee Jae-myung yêu cầu điều tra kỹ các vụ `개인정보 유출` gần đây tại ngân hàng, công ty tài chính và cơ quan công, đồng thời yêu cầu xây dựng biện pháp ứng phó.
+- Financial Services Commission (금융위원회) đã họp khẩn với các hiệp hội, regulator và tổ chức bị ảnh hưởng; cơ quan này nói chưa thể loại trừ khả năng AI được sử dụng trong một số cuộc tấn công.
+
+**Chuyện gì xảy ra**
+- Shinhan Bank báo cáo một vụ xâm nhập ngày 30/9; sau đó phạm vi kiểm tra được mở rộng khi nhiều tổ chức khác báo cáo cyberattack/data breach.
+- FSC yêu cầu ngành tài chính rà soát bảo mật toàn diện, siết access control, giảm external system access không cần thiết và chia sẻ nhanh IP/attack method/threat intelligence giữa các tổ chức.
+
+**Bối cảnh & giải thích**
+- Đây đã chuyển từ vấn đề của từng ngân hàng thành vấn đề `금융 보안 정책` ở cấp hệ thống. Khi nhiều tổ chức bị scan cùng lúc, regulator phải quan tâm đến shared vulnerability và khả năng attacker tái sử dụng cùng kỹ thuật trên toàn ngành.
+- Cụm từ “AI attacks defended by AI” của FSC nên hiểu là định hướng tăng automated detection/response; chưa phải bằng chứng đã xác nhận rằng toàn bộ vụ tấn công dùng AI.
+
+**Vì sao đáng chú ý**
+- Có thể dẫn tới tiêu chuẩn cybersecurity và reporting chặt hơn cho ngân hàng/fintech.
+- Người dùng có nguy cơ thứ cấp từ phishing/smishing nếu dữ liệu định danh bị lộ.
+- Việc Tổng thống trực tiếp yêu cầu điều tra nâng sự việc từ incident response lên cấp public policy.
+
+**Cần theo dõi tiếp**
+- Kết luận forensic về attack vector và mức dữ liệu thực sự bị lộ.
+- FSC có ban hành mandatory controls mới hay chỉ guidance.
+- Có bằng chứng đáng tin cậy nào về attribution, bao gồm khả năng liên quan Triều Tiên, hay không.
+
+**Nguồn & cách tìm lại**
+- Nguồn bổ sung: [Reuters — South Korean president orders probe into data leaks across financial industry](https://www.reuters.com/world/asia-pacific/south-korean-president-orders-probe-into-data-leaks-across-financial-industry-2026-10-04/)
+- Search keyword: `South Korea Lee Jae Myung probe data leaks financial industry FSC October 4 2026`
+- Korean search keyword: `이재명 금융권 개인정보 유출 전수 조사 금융위원회 AI 공격 2026년 10월 4일`
+
+**Keywords EN/KR → VI**
+| English | 한국어 | Tiếng Việt |
+|---|---|---|
+| data breach | 개인정보 유출 | rò rỉ/xâm phạm dữ liệu cá nhân |
+| threat intelligence | 위협 정보 | thông tin tình báo về mối đe dọa |
+| access control | 접근 통제 | kiểm soát truy cập |
+| incident response | 침해사고 대응 | ứng phó sự cố an ninh |
+
+### 🇺🇸 Hoa Kỳ
+
+#### Supreme Court mở term mới bằng vụ có thể định hình hàng chục vụ kiện khí hậu đối với Big Oil
+
+**Trạng thái:** ✅ OFFICIAL SCHEDULE / 📰 REPORTED CONTEXT
+
+**Tin mới nhất**
+- U.S. Supreme Court bắt đầu kỳ xét xử mới ngày 5/10 với `Suncor Energy (U.S.A.) Inc. v. County Commissioners of Boulder County`, đúng theo lịch tranh tụng chính thức của Tòa.
+- ExxonMobil và Suncor muốn bác vụ kiện của Boulder, Colorado, trong đó chính quyền địa phương đòi bồi thường thiệt hại liên quan biến đổi khí hậu và cáo buộc ngành dầu khí gây hiểu lầm về rủi ro nhiên liệu hóa thạch.
+
+**Chuyện gì xảy ra**
+- Trọng tâm pháp lý là `federal preemption`: liệu luật liên bang, đặc biệt khuôn khổ Clean Air Act, có ngăn các yêu cầu bồi thường theo luật bang kiểu Boulder hay không.
+- Chính quyền Trump đứng về phía các công ty dầu khí trong tranh luận rằng lĩnh vực này thuộc phạm vi luật liên bang.
+
+**Bối cảnh & giải thích**
+- Đây không phải vụ Tòa quyết định trực tiếp “biến đổi khí hậu có thật hay không”. Câu hỏi quan trọng là **cấp chính quyền nào có quyền dùng luật để quy trách nhiệm** cho phát thải và thiệt hại khí hậu.
+- Nếu federal law `preempts` state claims, nhiều vụ kiện tương tự của bang/thành phố có thể bị suy yếu hoặc bị bác.
+
+**Vì sao đáng chú ý**
+- Reuters cho biết gần 60 chính quyền bang/địa phương đã theo đuổi các vụ tương tự, nên precedent có thể vượt xa riêng Boulder.
+- Vụ án nằm ở giao điểm climate policy, corporate liability và federalism.
+
+**Cần theo dõi tiếp**
+- Câu hỏi của các thẩm phán trong oral argument ngày 5/10.
+- Justice Samuel Alito không tham gia vụ này; cần theo dõi khả năng chia phiếu.
+- Phán quyết dự kiến trước khi term kết thúc vào khoảng cuối tháng 6/2027.
+
+**Nguồn & cách tìm lại**
+- Nguồn chính thức: [U.S. Supreme Court — October 2026 hearing list](https://www.supremecourt.gov/oral_arguments/hearinglists/HearingList-October2026.pdf)
+- Nguồn bổ sung: [Reuters — US Supreme Court to kick off term with bid by Big Oil to toss climate suits](https://www.reuters.com/legal/government/us-supreme-court-kick-off-term-with-bid-by-big-oil-toss-climate-suits-2026-10-04/)
+- Search keyword: `Suncor Boulder Supreme Court October 5 2026 climate lawsuit federal preemption`
+- Korean search keyword: `미국 연방대법원 선코어 볼더 기후소송 연방법 우선 2026년 10월 5일`
+
+**Keywords EN/KR → VI**
+| English | 한국어 | Tiếng Việt |
+|---|---|---|
+| federal preemption | 연방법 우선 원칙 | nguyên tắc luật liên bang lấn át luật bang |
+| corporate liability | 기업 책임 | trách nhiệm pháp lý của doanh nghiệp |
+| oral argument | 구두변론 | tranh tụng bằng lời trước tòa |
+| federalism | 연방주의 | chủ nghĩa/cơ chế liên bang |
+
+#### Chính quyền Trump lập nhóm liên ngành mới để điều phối phản ứng trước AI năng lực cao
+
+**Trạng thái:** 📰 REPORTED
+
+**Tin mới nhất**
+- Washington Post đưa tin Tổng thống Donald Trump công bố một nhóm liên ngành mang tên `Super Intelligence Force`, nhằm điều phối phản ứng của chính phủ liên bang trước tốc độ phát triển nhanh của AI.
+- Theo báo cáo, nhóm có sự tham gia của các quan chức từ intelligence, FTC, OPM và Department of War, trong bối cảnh chính quyền vẫn ưu tiên duy trì vị thế dẫn đầu AI của Mỹ thay vì chủ trương dừng phát triển diện rộng.
+
+**Chuyện gì xảy ra**
+- Động thái này đặt AI năng lực cao vào giao điểm giữa innovation policy, national security, competition policy và workforce/government preparedness.
+- Cách tiếp cận được báo cáo vẫn nghiêng nhiều về phối hợp liên ngành và safeguards hơn là một moratorium chung.
+
+**Bối cảnh & giải thích**
+- `Interagency task force` không tự động tạo luật mới. Quyền thực tế phụ thuộc executive orders, authority sẵn có của từng agency và hành động của Congress.
+- Vì vậy cần phân biệt giữa **thành lập cơ chế điều phối** và **ban hành regulation bắt buộc**.
+
+**Vì sao đáng chú ý**
+- AI policy của Mỹ đang dịch từ câu hỏi riêng về model safety sang cả national security và năng lực nhà nước.
+- Cấu trúc liên ngành có thể ảnh hưởng cách FTC, intelligence agencies và các cơ quan nhân sự liên bang phối hợp với Big Tech.
+
+**Cần theo dõi tiếp**
+- Văn bản chính thức của White House và mandate cụ thể của nhóm.
+- Có rulemaking, procurement standard, audit requirement hoặc reporting obligation mới hay không.
+- Quan hệ giữa cơ chế này và các cam kết an toàn tự nguyện của doanh nghiệp AI.
+
+**Nguồn & cách tìm lại**
+- Nguồn bổ sung: Washington Post — `Trump launches 'Super Intelligence Force' after calls for AI slowdown` (04/10/2026).
+- Search keyword: `Trump Super Intelligence Force October 4 2026 AI interagency task force Washington Post`
+- Korean search keyword: `트럼프 슈퍼 인텔리전스 포스 AI 범정부 태스크포스 2026년 10월 4일`
+
+**Keywords EN/KR → VI**
+| English | 한국어 | Tiếng Việt |
+|---|---|---|
+| interagency task force | 범정부 태스크포스 | nhóm công tác liên cơ quan |
+| AI governance | AI 거버넌스 | quản trị AI |
+| regulatory authority | 규제 권한 | thẩm quyền quản lý |
+| voluntary safeguards | 자율 안전장치 | biện pháp an toàn tự nguyện |
